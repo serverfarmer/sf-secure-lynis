@@ -17,17 +17,9 @@ else
 fi
 
 
-echo -n "detecting audit level: "
-if [ -f /etc/X11/xinit/xinitrc ]; then
-	level="workstation"
-else
-	level="server"
-fi
-echo $level
-
 echo "setting up Lynis custom profile"
 file=/opt/lynis/serverfarmer.prf
-cat /opt/farm/ext/secure-lynis/templates/serverfarmer.prf.tpl |sed -e s/%%level%%/$level/g >$file
+/opt/farm/ext/secure-lynis/config-lynis.sh >$file
 chmod 0640 $file
 
 
