@@ -8,7 +8,7 @@ cd /opt/lynis
 if [ ! -d /opt/farm/ext/firewall ] || [ -f /etc/local/.config/logcheck.nofirewall ]; then
 	grep warning /var/log/lynis-report.dat \
 		|grep -vFf /opt/farm/ext/secure-lynis/config/allowed.conf \
-		|grep -vFf /etc/local/.config/allowed.lynis |
+		|grep -vFf /etc/local/.config/allowed.lynis \
 		|grep -v FIRE-4512
 else
 	grep warning /var/log/lynis-report.dat \
