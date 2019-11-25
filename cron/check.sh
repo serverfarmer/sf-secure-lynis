@@ -2,7 +2,9 @@
 
 # 1. run Lynis and scan the system
 cd /opt/lynis
-/opt/lynis/lynis audit system --cronjob --quiet --profile serverfarmer.prf 2>/dev/null |grep -v custom.prf
+/opt/lynis/lynis audit system --cronjob --quiet --profile serverfarmer.prf 2>/dev/null \
+	|grep -v custom.prf \
+	|grep -v "had a long execution:"
 
 # 2. warn about obvious problems by email from crontab
 if [ ! -d /opt/farm/ext/firewall ] || [ -f /etc/local/.config/logcheck.nofirewall ]; then
