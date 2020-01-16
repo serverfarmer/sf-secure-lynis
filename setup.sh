@@ -19,7 +19,7 @@ fi
 
 echo "setting up Lynis custom profile"
 file=/opt/lynis/serverfarmer.prf
-/opt/farm/ext/secure-lynis/config-lynis.sh >$file
+/opt/farm/ext/secure-lynis/internal/generate-lynis-profile.sh >$file
 chmod 0640 $file
 
 

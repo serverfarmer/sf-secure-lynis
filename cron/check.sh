@@ -7,15 +7,13 @@ cd /opt/lynis
 	|grep -v "had a long execution:"
 
 # 2. warn about obvious problems by email from crontab
-if [ ! -d /opt/farm/ext/firewall ] || [ -f /etc/local/.config/logcheck.nofirewall ]; then
-	grep warning /var/log/lynis-report.dat \
-		|grep -vFf /opt/farm/ext/secure-lynis/config/allowed.conf \
-		|grep -vFf /etc/local/.config/allowed.lynis \
-		|grep -v FIRE-4512
+
+if [ -f /etc/image-id ] && grep -q ami-ecs /etc/image-id; then
+	/opt/farm/ext/secure-lynis/internal/read-lynis-warnings.sh |grep -v AUTH-9308
+elif [ ! -d /opt/farm/ext/firewall ] || [ -f /etc/local/.config/logcheck.nofirewall ]; then
+	/opt/farm/ext/secure-lynis/internal/read-lynis-warnings.sh |grep -v FIRE-4512
 else
-	grep warning /var/log/lynis-report.dat \
-		|grep -vFf /opt/farm/ext/secure-lynis/config/allowed.conf \
-		|grep -vFf /etc/local/.config/allowed.lynis
+	/opt/farm/ext/secure-lynis/internal/read-lynis-warnings.sh
 fi
 
 # 3. leave /var/log/lynis.* files for possible inspection
